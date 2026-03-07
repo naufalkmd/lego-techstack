@@ -1,0 +1,83 @@
+{
+  "title": "Naufal LEGO Tech Stack",
+  "categories": [
+    {
+      "category": "Creative & Graphics",
+      "capLabel": "Creative",
+      "capColor": "#ea580c",
+      "items": [
+        { "label": "Blender", "color": "#ff7f00" },
+        { "label": "Affinity", "color": "#a7f175" },
+        { "label": "Unreal Engine", "color": "#313131" },
+        { "label": "Unity", "color": "#222222" },
+        { "label": "Figma", "color": "#ff2c2c" },
+        { "label": "Penpot", "color": "#ff6b35" },
+        { "label": "OpenGL", "color": "#5586a4" },
+        { "label": "darktable", "color": "#00bfff", "monogram": "dt" }
+      ]
+    },
+    {
+      "category": "Frontend & Web",
+      "capLabel": "Frontend",
+      "capColor": "#2563eb",
+      "items": [
+        { "label": "TypeScript", "color": "#3178c6" },
+        { "label": "React", "color": "#20232a" },
+        { "label": "Next.js", "color": "#000000" },
+        { "label": "JavaScript", "color": "#f7df1e" },
+        { "label": "HTML5", "color": "#e34f26" },
+        { "label": "CSS3", "color": "#1572b6" },
+        { "label": "Tailwind", "color": "#06b6d4" },
+        { "label": "WebGL", "color": "#990000" },
+        { "label": "GSAP", "color": "#88ce02" },
+        { "label": "Three.js", "color": "#111111" },
+        { "label": "Babylon.js", "color": "#e0684b" },
+        { "label": "A-Frame", "color": "#ef2d5e" }
+      ]
+    },
+    {
+      "category": "Programming & Automation",
+      "capLabel": "Automation",
+      "capColor": "#475569",
+      "items": [
+        { "label": "Python", "color": "#14354c" },
+        { "label": "PowerShell", "color": "#2d2d2d", "monogram": "PS" },
+        { "label": "Shell", "color": "#121011" },
+        { "label": "Ruby", "color": "#cc342d" },
+        { "label": "GitHub Actions", "color": "#2088ff" },
+        { "label": "Git", "color": "#f05032" },
+        { "label": "Linux", "color": "#fcc624" },
+        { "label": "Homebrew", "color": "#fede7a" },
+        { "label": "Chocolatey", "color": "#80b5e3" }
+      ]
+    },
+    {
+      "category": "AI & Data Science",
+      "capLabel": "AI Data",
+      "capColor": "#0f766e",
+      "items": [
+        { "label": "FastAPI", "color": "#05998b" },
+        { "label": "Replicate", "color": "#d30428" },
+        { "label": "OpenRouter", "color": "#808080" },
+        { "label": "Pandas", "color": "#150458" },
+        { "label": "NumPy", "color": "#013243" },
+        { "label": "PyTorch", "color": "#ee4c2c" },
+        { "label": "HuggingFace", "color": "#ffd21e" },
+        { "label": "Jupyter Notebook", "color": "#f37626" }
+      ]
+    },
+    {
+      "category": "Cloud & Infrastructure",
+      "capLabel": "Cloud",
+      "capColor": "#1d4ed8",
+      "items": [
+        { "label": "Hetzner", "color": "#d30428" },
+        { "label": "AWS", "color": "#ff9900", "monogram": "AWS" },
+        { "label": "Docker", "color": "#2ca5e0" },
+        { "label": "Kubernetes", "color": "#326ce5" },
+        { "label": "Uptime Kuma", "color": "#5cdd8b" },
+        { "label": "Terraform", "color": "#5c4ee5" }
+      ]
+    }
+  ]
+}

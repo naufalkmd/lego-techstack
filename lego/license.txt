@@ -1,0 +1,11 @@
+Model Information:
+* title:	Lego
+* source:	https://sketchfab.com/3d-models/lego-efa8ae3ec72c4afabcaebdf7aa723f3d
+* author:	Martti Hänninen (https://sketchfab.com/marttihan)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Lego" (https://sketchfab.com/3d-models/lego-efa8ae3ec72c4afabcaebdf7aa723f3d) by Martti Hänninen (https://sketchfab.com/marttihan) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

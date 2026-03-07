@@ -1,0 +1,16 @@
+{
+  "name": "lego-techstack",
+  "description": "Generate a LEGO-inspired tech stack SVG and WebGL preview for a GitHub profile README.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node src/build.mjs",
+    "gif": "powershell -ExecutionPolicy Bypass -File src/render-gif.ps1",
+    "preview": "node src/build.mjs && node src/serve.mjs",
+    "start": "node src/build.mjs"
+  },
+  "dependencies": {
+    "puppeteer-core": "^24.38.0",
+    "simple-icons": "^16.10.0"
+  }
+}

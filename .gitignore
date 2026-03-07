@@ -1,0 +1,7 @@
+node_modules/
+lego.zip
+image/
+output/.gif-browser-profile/
+output/.gif-frames/
+__pycache__/
+*.pyc
