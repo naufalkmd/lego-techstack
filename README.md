@@ -2,6 +2,9 @@
 
 Make a LEGO-style tech stack image for your GitHub profile README.
 
+Fork this repository before you edit anything.
+Your GitHub profile README should load the generated image from your own fork, not from this upstream repository.
+
 <p align="center">
   <img
     alt="LEGO tech stack"
@@ -19,11 +22,14 @@ Make a LEGO-style tech stack image for your GitHub profile README.
 
 ## How To Use It
 
-### 1. Fork this repo
+### 1. Fork this repo first
 
 Fork this repository to your own GitHub account.
 
-### 2. Clone your fork
+Do not skip this step.
+If you clone or edit without using your own fork, pushing your changes will not update the image URL used by your GitHub profile README.
+
+### 2. Clone your fork, not the upstream repo
 
 ```sh
 git clone https://github.com/<your-user>/lego-techstack.git
@@ -117,6 +123,8 @@ git commit -m "Update tech stack"
 git push
 ```
 
+Push to your fork's default branch so the raw GitHub image URL points at your updated files.
+
 ### 9. Paste this into your GitHub profile README
 
 Paste this into the `README.md` of your GitHub profile repository, which is usually named `<your-user>/<your-user>`.
@@ -146,3 +154,4 @@ If you renamed this fork, replace `lego-techstack` in the URL with your repo nam
 
 - If a logo does not appear, the generator will use letters instead.
 - If the image in your GitHub README does not update right away, wait a bit and refresh the page.
+- If your profile still shows an old image, check that the URL points to your fork and not the upstream repo.
