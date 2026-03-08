@@ -2,8 +2,8 @@ $ErrorActionPreference = "Stop"
 
 $rootDir = Split-Path -Parent $PSScriptRoot
 $port = if ($env:PORT) { [int]$env:PORT } else { 4173 }
-$debugPort = if ($env:BROWSER_DEBUG_PORT) { [int]$env:BROWSER_DEBUG_PORT } else { 9222 }
-$profileDir = Join-Path $rootDir "output\.gif-browser-profile"
+$debugPort = if ($env:BROWSER_DEBUG_PORT) { [int]$env:BROWSER_DEBUG_PORT } else { Get-Random -Minimum 9222 -Maximum 9422 }
+$profileDir = Join-Path $rootDir ("output\.gif-browser-profile-" + [Guid]::NewGuid().ToString("N"))
 
 function Test-HttpReady {
   param([string]$Url)
@@ -104,10 +104,6 @@ try {
   }
 
   Wait-ForHttpReady "http://localhost:$port/"
-
-  if (Test-Path $profileDir) {
-    Remove-Item -Recurse -Force $profileDir
-  }
 
   $browserPath = Resolve-BrowserPath
   $browserProcess = Start-BrowserForCapture -BrowserPath $browserPath -ProfileDir $profileDir -DebugPort $debugPort -Headless

@@ -29,6 +29,16 @@ const escapeXml = (value) =>
 
 const svgToDataUri = (svg) => `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
 
+const normalizeSvgMarkup = (svgMarkup) => {
+  const body = parseSvgBody(svgMarkup);
+  const viewBox = parseSvgViewBox(svgMarkup);
+  return [
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${escapeXml(viewBox)}" aria-hidden="true">`,
+    body,
+    '</svg>'
+  ].join('');
+};
+
 const parseSvgBody = (svgMarkup) => {
   const match = /<svg[^>]*>([\s\S]*?)<\/svg>/i.exec(svgMarkup.trim());
   return match ? match[1].trim() : svgMarkup.trim();
@@ -56,6 +66,13 @@ const buildMonogramSvg = (monogram) => {
     '</svg>'
   ].join('');
 };
+
+const readInlineSvg = (svgMarkup) => ({
+  kind: 'inline-svg',
+  dataUri: svgToDataUri(normalizeSvgMarkup(svgMarkup)),
+  fallback: false,
+  source: 'inline-svg'
+});
 
 const monogramFromLabel = (label) => {
   const trimmed = label.trim();
@@ -85,18 +102,9 @@ const readCustomSvg = (rootDir, iconPath) => {
     throw new Error(`Only SVG icon assets are supported: ${iconPath}`);
   }
 
-  const rawSvg = readFileSync(assetPath, 'utf8');
-  const body = parseSvgBody(rawSvg);
-  const viewBox = parseSvgViewBox(rawSvg);
-  const svg = [
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${escapeXml(viewBox)}" aria-hidden="true">`,
-    body,
-    '</svg>'
-  ].join('');
-
   return {
     kind: 'custom',
-    dataUri: svgToDataUri(svg),
+    dataUri: svgToDataUri(normalizeSvgMarkup(readFileSync(assetPath, 'utf8'))),
     fallback: false,
     source: iconPath
   };
@@ -129,6 +137,10 @@ const resolveSimpleIcon = (requested) => {
 };
 
 const resolveIconAsset = (rootDir, item, warnings) => {
+  if (item.iconSvg) {
+    return readInlineSvg(item.iconSvg);
+  }
+
   if (item.iconPath) {
     return readCustomSvg(rootDir, item.iconPath);
   }

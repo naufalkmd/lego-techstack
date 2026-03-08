@@ -71,6 +71,7 @@
       }
 
       html[data-capture='true'] .hero,
+      html[data-capture='true'] .editor-panel,
       html[data-capture='true'] .directory,
       html[data-capture='true'] .meta {
         display: none;
@@ -257,6 +258,210 @@
         background: rgba(255, 255, 255, 0.96);
         border: 1px solid rgba(16, 32, 51, 0.08);
       }
+
+      .editor-panel {
+        padding: 24px 20px 20px;
+      }
+
+      .editor-head {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 16px;
+      }
+
+      .editor-head h2 {
+        margin: 0 0 8px;
+        font-size: 24px;
+      }
+
+      .editor-head p {
+        margin: 0;
+        max-width: 760px;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .editor-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .editor-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        padding: 0 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(16, 32, 51, 0.16);
+        background: rgba(255, 255, 255, 0.92);
+        color: var(--ink);
+        font: inherit;
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+      .editor-button:hover {
+        border-color: rgba(16, 32, 51, 0.28);
+        background: #ffffff;
+      }
+
+      .editor-button.subtle {
+        background: rgba(16, 32, 51, 0.05);
+      }
+
+      .editor-file-input {
+        display: none;
+      }
+
+      .editor-title-row {
+        display: grid;
+        grid-template-columns: minmax(220px, 360px) 1fr;
+        gap: 14px;
+        margin: 20px 0 16px;
+        align-items: end;
+      }
+
+      .editor-status {
+        min-height: 42px;
+        display: flex;
+        align-items: center;
+        padding: 10px 14px;
+        border-radius: 14px;
+        background: rgba(16, 32, 51, 0.05);
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .field {
+        display: grid;
+        gap: 8px;
+      }
+
+      .field span {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--muted);
+      }
+
+      .field input,
+      .field textarea {
+        width: 100%;
+        min-height: 42px;
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: 1px solid rgba(16, 32, 51, 0.16);
+        background: rgba(255, 255, 255, 0.96);
+        font: inherit;
+        color: var(--ink);
+      }
+
+      .field textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+
+      .field input[type='color'] {
+        min-height: 46px;
+        padding: 6px;
+      }
+
+      .stack-editor {
+        display: grid;
+        gap: 16px;
+      }
+
+      .stack-card {
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.56);
+        padding: 16px;
+      }
+
+      .stack-card-head {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+
+      .stack-card-head h3 {
+        margin: 0 0 4px;
+        font-size: 18px;
+      }
+
+      .stack-card-head p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .stack-card-actions,
+      .item-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .stack-fields {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+
+      .stack-items {
+        display: grid;
+        gap: 12px;
+      }
+
+      .stack-item {
+        border-radius: 18px;
+        border: 1px solid rgba(16, 32, 51, 0.1);
+        background: rgba(16, 32, 51, 0.04);
+        padding: 12px;
+      }
+
+      .stack-item-grid {
+        display: grid;
+        grid-template-columns: minmax(180px, 1.8fr) minmax(96px, 120px) minmax(220px, 1.2fr);
+        gap: 12px;
+        align-items: end;
+      }
+
+      .logo-field-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .logo-preview {
+        width: 46px;
+        height: 46px;
+        padding: 7px;
+        border-radius: 14px;
+        border: 1px solid rgba(16, 32, 51, 0.1);
+        background: rgba(255, 255, 255, 0.96);
+      }
+
+      .item-actions {
+        margin-top: 12px;
+      }
+
+      @media (max-width: 920px) {
+        .editor-title-row {
+          grid-template-columns: 1fr;
+        }
+
+        .stack-item-grid {
+          grid-template-columns: 1fr;
+        }
+      }
     </style>
   </head>
   <body>
@@ -266,7 +471,7 @@
         <p>
           This preview uses the GLTF brick in <code>lego/scene.gltf</code>, the generated
           <code>output/techstack.manifest.json</code>, and projected brick decals so each tool badge is mapped
-          onto the LEGO face. Run <code>npm run preview</code> to rebuild the SVG and manifest,
+          onto the LEGO face. Run <code>npm run preview</code> to rebuild the preview manifest,
           then open the local server to orbit around the stacks.
         </p>
       </section>
@@ -283,6 +488,38 @@
         </div>
       </section>
 
+      <section class="panel editor-panel">
+        <div class="editor-head">
+          <div>
+            <h2>Stack Editor</h2>
+            <p>
+              Upload custom SVG logos, rename bricks, reorder stacks, then export a JSON file with inline
+              logos so another user can reuse the setup without hunting for separate assets.
+            </p>
+          </div>
+          <div class="editor-actions">
+            <label class="editor-button subtle">
+              Import JSON
+              <input id="import-config" class="editor-file-input" type="file" accept=".json,application/json" />
+            </label>
+            <button id="copy-config" class="editor-button" type="button">Copy JSON</button>
+            <button id="download-config" class="editor-button" type="button">Download JSON</button>
+            <button id="reset-config" class="editor-button subtle" type="button">Reset</button>
+            <button id="add-category" class="editor-button" type="button">Add Category</button>
+          </div>
+        </div>
+        <div class="editor-title-row">
+          <label class="field">
+            <span>Stack title</span>
+            <input id="stack-title" type="text" placeholder="LEGO Tech Stack" />
+          </label>
+          <div id="editor-status" class="editor-status">
+            Local edits stay in the browser until you export the JSON.
+          </div>
+        </div>
+        <div id="editor" class="stack-editor"></div>
+      </section>
+
       <section class="panel directory">
         <h2>Tech Directory</h2>
         <p>
@@ -297,7 +534,8 @@
       <section class="meta">
         <article class="card">
           <strong>README-safe output</strong>
-          Keep using <code>output/lego-techstack.svg</code> for the profile README image.
+          Use <code>output/lego-techstack.png</code> as the README poster image, then link
+          <code>output/lego-techstack-disassemble.gif</code> below it if you want animation.
         </article>
         <article class="card">
           <strong>Zero-friction data file</strong>
@@ -306,8 +544,8 @@
         </article>
         <article class="card">
           <strong>GitHub Action</strong>
-          The repo can rebuild and commit <code>output/</code> automatically on every data change,
-          so forks do not need a local build just to update the README graphic.
+          The repo can rebuild and commit <code>output/techstack.manifest.json</code> automatically
+          when the source data changes.
         </article>
       </section>
     </main>

@@ -1,117 +1,148 @@
 # LEGO Tech Stack
 
-Generate a LEGO-inspired tech stack image for a GitHub profile README.
+Make a LEGO-style tech stack image for your GitHub profile README.
 
-This repo is designed to be fork-friendly:
+<p align="center">
+  <img
+    alt="LEGO tech stack"
+    src="./output/lego-techstack-disassemble.gif"
+  />
+</p>
+<p align="center">
+  <sub><a href="./output/lego-techstack.png">View PNG</a></sub>
+</p>
 
-- Most users only edit `data/techstack.json`.
-- `npm run build` writes both `output/lego-techstack.svg` and `output/techstack.manifest.json`.
-- `npm run preview` rebuilds first, then starts the local WebGL preview server.
-- A GitHub Action can regenerate and commit `output/` automatically when the data changes.
+## What You Will Use
 
-## Quick start
+- `output/lego-techstack.png`: the main image for your README
+- `output/lego-techstack-disassemble.gif`: optional animation link
+
+## How To Use It
+
+### 1. Fork this repo
+
+Fork this repository to your own GitHub account.
+
+### 2. Clone your fork
+
+```sh
+git clone https://github.com/<your-user>/lego-techstack.git
+cd lego-techstack
+```
+
+### 3. Install dependencies
 
 ```sh
 npm install
-npm run build
+```
+
+### 4. Start the local editor
+
+```sh
 npm run preview
 ```
 
 Then open `http://localhost:4173/`.
 
-## Data format
+### 5. Edit your stack on localhost
 
-Each category contains a cap brick and a list of tool bricks:
+Use the browser editor to:
+
+- rename categories and bricks
+- change brick colors
+- reorder stacks and bricks
+- upload SVG logos if you want custom icons
+
+When you are done, click either:
+
+- `Copy JSON`
+- `Download JSON`
+
+### 6. Save the exported JSON
+
+Replace the contents of `data/techstack.json` with the JSON from the localhost editor.
+
+If you prefer editing by hand, you can still edit `data/techstack.json` directly.
+
+The two fields most people need for each brick are:
+
+- `label`: the text shown on the brick
+- `color`: the brick color
+
+Example:
 
 ```json
 {
-  "category": "Frontend & Web",
-  "capLabel": "Frontend",
-  "capColor": "#2563eb",
-  "items": [
-    { "label": "React", "color": "#20232a" },
-    { "label": "Next.js", "color": "#000000" },
-    { "label": "Tailwind", "color": "#06b6d4" }
+  "title": "Your Name LEGO Tech Stack",
+  "categories": [
+    {
+      "category": "Frontend & Web",
+      "capLabel": "Frontend",
+      "capColor": "#2563eb",
+      "items": [
+        { "label": "React", "color": "#20232a" },
+        { "label": "Next.js", "color": "#000000" },
+        { "label": "Tailwind CSS", "color": "#06b6d4" }
+      ]
+    },
+    {
+      "category": "Backend",
+      "capLabel": "Backend",
+      "capColor": "#16a34a",
+      "items": [
+        { "label": "Node.js", "color": "#3c873a" },
+        { "label": "PostgreSQL", "color": "#336791" }
+      ]
+    }
   ]
 }
 ```
 
-Each item supports these fields:
-
-- `label`: required display name.
-- `color`: required brick color.
-- `icon`: optional Simple Icons title or slug override.
-- `iconPath`: optional local SVG path if you want to supply your own logo.
-- `monogram`: optional fallback letters when no logo exists in the automatic resolver.
-
-## Icon resolution order
-
-The build resolves each brick logo in this order:
-
-1. `iconPath`
-2. `icon`
-3. automatic lookup from `label`
-4. monogram fallback
-
-That keeps the default setup low-friction while still allowing custom SVG overrides when a brand is missing.
-
-## README output
-
-Use the generated SVG in your profile README:
-
-```md
-<p align="center">
-  <img
-    alt="LEGO tech stack"
-    src="https://raw.githubusercontent.com/<your-user>/lego-techstack/main/output/lego-techstack.svg"
-  />
-</p>
-```
-
-## Local WebGL preview
-
-The preview uses `lego/scene.gltf`, clones the brick per item, projects the category label onto the cap brick, and attaches a generated front badge with the tool logo and name.
-
-Run:
-
-```sh
-npm run preview
-```
-
-Then open `http://localhost:4173/`.
-
-## GIF export
-
-You can also render a looping disassembly GIF from the WebGL preview:
+### 7. Generate the images
 
 ```sh
 npm run gif
 ```
 
-That writes `output/lego-techstack-disassemble.gif`.
+This creates:
 
-The default export uses a transparent background so you can reuse the animation on dark or light layouts.
+- `output/lego-techstack.png`
+- `output/lego-techstack-disassemble.gif`
 
-Optional overrides:
+### 8. Commit and push your changes
 
-- `GIF_FRAMES=24 npm run gif`
-- `GIF_WIDTH=1600 GIF_HEIGHT=1000 npm run gif`
-- `GIF_TRANSPARENT=0 npm run gif`
-- `KEEP_GIF_FRAMES=1 npm run gif`
+```sh
+git add data/techstack.json output
+git commit -m "Update tech stack"
+git push
+```
 
-## GitHub Action
+### 9. Paste this into your GitHub profile README
 
-The workflow at `.github/workflows/generate-techstack.yml` rebuilds `output/` whenever `data/` or `src/` changes on `main`.
+Paste this into the `README.md` of your GitHub profile repository, which is usually named `<your-user>/<your-user>`.
 
-If you fork this repo and keep GitHub Actions enabled, the normal flow is:
+Replace `<your-user>` with your GitHub username.
 
-1. Edit `data/techstack.json`.
-2. Push to `main`.
-3. Let the workflow regenerate and commit `output/lego-techstack.svg` and `output/techstack.manifest.json`.
-4. Point your profile README at the raw SVG URL.
+```md
+<p align="center">
+  <img
+    alt="LEGO tech stack"
+    src="https://raw.githubusercontent.com/<your-user>/lego-techstack/main/output/lego-techstack.png"
+  />
+</p>
+<p align="center">
+  <sub>
+    <a href="https://raw.githubusercontent.com/<your-user>/lego-techstack/main/output/lego-techstack-disassemble.gif">
+      View animation
+    </a>
+  </sub>
+</p>
+```
 
-## Notes
+If your default branch is not `main`, change that part of the URL too.
+If you renamed this fork, replace `lego-techstack` in the URL with your repo name.
 
-- The static README asset is `output/lego-techstack.svg`.
-- The WebGL preview needs internet access because Three.js is loaded from a CDN.
-- If an icon cannot be found, the build falls back to a monogram so the stack still renders cleanly.
+## Troubleshooting
+
+- If a logo does not appear, the generator will use letters instead.
+- If the image in your GitHub README does not update right away, wait a bit and refresh the page.

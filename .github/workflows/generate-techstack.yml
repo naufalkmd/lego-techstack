@@ -1,4 +1,4 @@
-name: Generate Tech Stack
+name: Generate Preview Manifest
 
 on:
   push:
@@ -32,7 +32,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build generated assets
+      - name: Build preview manifest
         run: npm run build
 
       - name: Commit generated output
@@ -45,5 +45,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add output
-          git commit -m "chore: regenerate tech stack"
+          git commit -m "chore: regenerate preview manifest"
           git push

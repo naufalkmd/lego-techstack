@@ -1,4 +1,4 @@
-import { mkdirSync, rmSync } from 'node:fs';
+import { copyFileSync, mkdirSync, rmSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { resolve, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -9,6 +9,7 @@ const rootDir = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const outputDir = resolve(rootDir, 'output');
 const framesDir = resolve(outputDir, '.gif-frames');
 const gifPath = resolve(outputDir, 'lego-techstack-disassemble.gif');
+const posterPath = resolve(outputDir, 'lego-techstack.png');
 const port = Number(process.env.PORT || 4173);
 const browserWSEndpoint = process.env.BROWSER_WS_ENDPOINT || '';
 const width = Number(process.env.GIF_WIDTH || 1280);
@@ -61,6 +62,7 @@ const main = async () => {
   runNodeScript(buildPath);
   rmSync(framesDir, { recursive: true, force: true });
   rmSync(gifPath, { force: true });
+  rmSync(posterPath, { force: true });
   mkdirSync(framesDir, { recursive: true });
 
   try {
@@ -132,6 +134,10 @@ const main = async () => {
     if (encodeResult.status !== 0) {
       throw new Error('Failed to encode GIF with Pillow.');
     }
+
+    const firstFramePath = join(framesDir, 'frame-000.png');
+    copyFileSync(firstFramePath, posterPath);
+    console.log(`Generated ${posterPath}`);
   } finally {
     if (!keepFrames) {
       rmSync(framesDir, { recursive: true, force: true });
