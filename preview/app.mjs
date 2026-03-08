@@ -317,8 +317,9 @@ const boostColor = (hexColor, saturationBoost = 0.12, lightnessBoost = 0.04) => 
   const color = new THREE.Color(hexColor);
   const hsl = { h: 0, s: 0, l: 0 };
   color.getHSL(hsl);
-  const saturation = Math.min(1, hsl.s + saturationBoost);
-  const lightness = hsl.l < 0.08 ? 0.18 : Math.min(0.56, hsl.l + lightnessBoost);
+  const isNeutral = hsl.s < 0.08;
+  const saturation = isNeutral ? hsl.s : Math.min(1, hsl.s + saturationBoost);
+  const lightness = isNeutral ? hsl.l : hsl.l < 0.08 ? 0.18 : Math.min(0.56, hsl.l + lightnessBoost);
   color.setHSL(hsl.h, saturation, lightness);
   return color;
 };
@@ -788,6 +789,41 @@ const normalizeHexColor = (value, fallback) =>
 const svgToDataUri = (svgMarkup) =>
   `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgMarkup)}`;
 
+const parseSvgBody = (svgMarkup) => {
+  const match = /<svg[^>]*>([\s\S]*?)<\/svg>/i.exec(svgMarkup.trim());
+  return match ? match[1].trim() : svgMarkup.trim();
+};
+
+const parseSvgViewBox = (svgMarkup) => {
+  const match = /viewBox=["']([^"']+)["']/i.exec(svgMarkup);
+  return match ? match[1] : '0 0 24 24';
+};
+
+const parseSvgRootAttributes = (svgMarkup) => {
+  const match = /<svg\b([^>]*)>/i.exec(svgMarkup);
+  const sourceAttributes = match ? match[1] : '';
+  const preserved = new Map([['xmlns', 'http://www.w3.org/2000/svg']]);
+
+  for (const attribute of sourceAttributes.matchAll(/\s((?:xmlns(?::[\w.-]+)?)|xml:space)=["']([^"']+)["']/gi)) {
+    preserved.set(attribute[1], attribute[2]);
+  }
+
+  return Array.from(preserved.entries())
+    .map(([name, value]) => `${name}="${escapeHtml(value)}"`)
+    .join(' ');
+};
+
+const normalizeSvgMarkup = (svgMarkup) => {
+  const body = parseSvgBody(svgMarkup);
+  const viewBox = parseSvgViewBox(svgMarkup);
+  const rootAttributes = parseSvgRootAttributes(svgMarkup);
+  return [
+    `<svg ${rootAttributes} viewBox="${escapeHtml(viewBox)}" aria-hidden="true">`,
+    body,
+    '</svg>'
+  ].join('');
+};
+
 const dataUriToSvg = (dataUri) => {
   const marker = 'data:image/svg+xml';
   if (!String(dataUri || '').startsWith(marker)) {
@@ -805,7 +841,7 @@ const normalizeInlineSvg = (svgMarkup) => {
   if (!/<svg[\s>]/i.test(trimmed)) {
     throw new Error('Uploaded logo must be an SVG file.');
   }
-  return trimmed;
+  return normalizeSvgMarkup(trimmed);
 };
 
 const monogramFromLabel = (label) => {
@@ -1046,6 +1082,7 @@ const buildStacksFromData = async (data) => {
   for (const [categoryIndex, category] of categories.entries()) {
     const categoryGroup = new THREE.Group();
     categoryGroup.position.x = baseX + categoryIndex * gap;
+    const capColor = normalizeHexColor(category.capColor, '#090b12');
 
     for (const [itemIndex, item] of category.items.entries()) {
       const brick = cloneBrick(template, item.color);
@@ -1055,7 +1092,7 @@ const buildStacksFromData = async (data) => {
       registerDisassemblyTarget(brick, (categoryIndex + 1) * 101 + (itemIndex + 1) * 17, 1, nextTargets);
     }
 
-    const cap = cloneBrick(template, '#090b12', {
+    const cap = cloneBrick(template, capColor, {
       preserveColor: true,
       roughness: 0.09,
       metalness: 0.3,
@@ -1063,7 +1100,7 @@ const buildStacksFromData = async (data) => {
       clearcoatRoughness: 0.06,
       reflectivity: 0.78,
       envMapIntensity: 0.82,
-      emissiveColor: '#161b24',
+      emissiveMix: 0.03,
       emissiveIntensity: 0.05
     });
     cap.scale.multiplyScalar(1.08);
@@ -1072,7 +1109,7 @@ const buildStacksFromData = async (data) => {
       cap,
       {
         text: category.capLabel || category.category,
-        color: '#090b12'
+        color: capColor
       },
       nextBindings
     );

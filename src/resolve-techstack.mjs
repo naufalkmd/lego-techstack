@@ -32,8 +32,9 @@ const svgToDataUri = (svg) => `data:image/svg+xml;charset=utf-8,${encodeURICompo
 const normalizeSvgMarkup = (svgMarkup) => {
   const body = parseSvgBody(svgMarkup);
   const viewBox = parseSvgViewBox(svgMarkup);
+  const rootAttributes = parseSvgRootAttributes(svgMarkup);
   return [
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${escapeXml(viewBox)}" aria-hidden="true">`,
+    `<svg ${rootAttributes} viewBox="${escapeXml(viewBox)}" aria-hidden="true">`,
     body,
     '</svg>'
   ].join('');
@@ -47,6 +48,20 @@ const parseSvgBody = (svgMarkup) => {
 const parseSvgViewBox = (svgMarkup) => {
   const match = /viewBox=["']([^"']+)["']/i.exec(svgMarkup);
   return match ? match[1] : '0 0 24 24';
+};
+
+const parseSvgRootAttributes = (svgMarkup) => {
+  const match = /<svg\b([^>]*)>/i.exec(svgMarkup);
+  const sourceAttributes = match ? match[1] : '';
+  const preserved = new Map([['xmlns', 'http://www.w3.org/2000/svg']]);
+
+  for (const attribute of sourceAttributes.matchAll(/\s((?:xmlns(?::[\w.-]+)?)|xml:space)=["']([^"']+)["']/gi)) {
+    preserved.set(attribute[1], attribute[2]);
+  }
+
+  return Array.from(preserved.entries())
+    .map(([name, value]) => `${name}="${escapeXml(value)}"`)
+    .join(' ');
 };
 
 const buildSimpleIconSvg = (icon) =>

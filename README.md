@@ -127,13 +127,13 @@ Replace `<your-user>` with your GitHub username.
 <p align="center">
   <img
     alt="LEGO tech stack"
-    src="https://raw.githubusercontent.com/<your-user>/lego-techstack/main/output/lego-techstack.png"
+    src="https://raw.githubusercontent.com/<your-user>/lego-techstack/main/output/lego-techstack-disassemble.gif"
   />
 </p>
 <p align="center">
   <sub>
-    <a href="https://raw.githubusercontent.com/<your-user>/lego-techstack/main/output/lego-techstack-disassemble.gif">
-      View animation
+    <a href="https://raw.githubusercontent.com/<your-user>/lego-techstack/main/output/lego-techstack.png">
+      View Static
     </a>
   </sub>
 </p>
